@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>PanTS_00003021 colon visual review</title>
+  <style>
+    :root{color-scheme:dark;font:15px/1.45 "Segoe UI",Arial,sans-serif;background:#0c1016;color:#e8eef5}
+    *{box-sizing:border-box}body{margin:0;padding:20px;max-width:1500px;margin-inline:auto}
+    header{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;margin-bottom:16px}
+    h1{font-size:24px;margin:0}h1 span{color:#ff7777}.tag{color:#aeb9c7;font-size:13px}
+    .controls{display:grid;grid-template-columns:1fr 1fr auto;gap:12px;align-items:end;background:#151c25;border:1px solid #2c3949;border-radius:10px;padding:14px;margin-bottom:10px}
+    label{display:block;font-weight:600}small{display:block;color:#9eacbc;font-weight:400;margin-top:4px;overflow-wrap:anywhere}
+    input[type=file]{display:block;width:100%;margin-top:7px;color:#ccd5df;font-size:13px}
+    button{background:#2679d8;color:white;border:0;border-radius:6px;padding:10px 16px;font-weight:700;cursor:pointer}
+    button:disabled{opacity:.45;cursor:not-allowed}.view-controls{display:flex;gap:20px;align-items:center;flex-wrap:wrap;background:#151c25;border:1px solid #2c3949;border-radius:10px;padding:10px 14px;margin-bottom:8px}
+    .view-controls label{display:flex;gap:8px;align-items:center;font-weight:500}.view-controls input[type=range]{width:130px}
+    #status{min-height:23px;color:#aeb9c7;margin:7px 2px}#status.error{color:#ff8585}#details{color:#9eacbc;font-size:12px;min-height:18px;margin:0 2px 8px}
+    .viewer-wrap{position:relative;border:1px solid #2c3949;border-radius:10px;overflow:hidden;background:#080b10}
+    canvas{display:block;width:100%;height:min(74vh,900px);min-height:540px;touch-action:none}
+    .panel-label{position:absolute;z-index:2;pointer-events:none;color:#f3f6fa;background:#111923cc;border:1px solid #6b788888;border-radius:4px;padding:3px 8px;font-size:12px;font-weight:700}
+    .axial{left:10px;top:10px}.coronal{left:calc(50% + 10px);top:10px}.sagittal{left:10px;top:calc(50% + 10px)}.render{left:calc(50% + 10px);top:calc(50% + 10px)}
+    .note{font-size:12px;color:#9eacbc;margin-top:8px}
+    @media(max-width:800px){body{padding:10px}.controls{grid-template-columns:1fr}.viewer-wrap canvas{min-height:480px;height:72vh}header{align-items:start;flex-direction:column}}
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Case <span>PanTS_00003021</span> · Organ: <span>Colon</span></h1>
+    <div class="tag">Original CT and original colon label · read-only review</div>
+  </header>
+  <section class="controls" aria-label="Select local volumes">
+    <label>CT volume
+      <input id="ct-file" type="file" accept=".nii,.nii.gz">
+      <small>Expected: D:\PanTS_data\ct_review\shortlist_38\PanTS_00003021\ct.nii.gz</small>
+    </label>
+    <label>Colon labelmap
+      <input id="mask-file" type="file" accept=".nii,.nii.gz">
+      <small>Expected: D:\PanTS_data\labels\PanTS_00003021\segmentations\colon.nii.gz</small>
+    </label>
+    <button id="load-pair" disabled>Load CT + colon</button>
+  </section>
+  <section class="view-controls" aria-label="Overlay controls">
+    <label><input id="mask-visible" type="checkbox" checked disabled> Show colon overlay</label>
+    <label>Colon opacity <input id="mask-opacity" type="range" min="10" max="85" value="55" disabled></label>
+  </section>
+  <div id="status" role="status" aria-live="polite">Choose the two specified local NIfTI files, then load the pair.</div>
+  <div id="details"></div>
+  <div class="viewer-wrap">
+    <canvas id="viewer" aria-label="Axial, coronal, sagittal, and 3D CT views with colon overlay"></canvas>
+    <div class="panel-label axial">AXIAL</div><div class="panel-label coronal">CORONAL</div>
+    <div class="panel-label sagittal">SAGITTAL</div><div class="panel-label render">3D VOLUME</div>
+  </div>
+  <p class="note">Files are read locally by your browser and are not uploaded or saved. If the CT and mask dimensions or affine differ, the page refuses to overlay them.</p>
+  <script src="./visual_review_3021.bundle.js"></script>
+</body>
+</html>
